@@ -6,6 +6,7 @@ const sequelize = new Sequelize(PG_DB, PG_USER, PG_PW, {
   host: PG_HOST,
   port: PG_PORT,
   dialect: "postgres",
+  typeValidation: true,
 })
 
 export const pgConnect = async () => {
