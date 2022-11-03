@@ -10,7 +10,7 @@ const sequelize = new Sequelize(PG_DB, PG_USER, PG_PW, {
 
 export const pgConnect = async () => {
   try {
-    await sequelize.authenticate()
+    await sequelize.authenticate({ logging: true })
     console.log("Successfully connnected to Postgres!")
   } catch (error) {
     console.log(error)
@@ -20,7 +20,7 @@ export const pgConnect = async () => {
 
 export const syncModels = async () => {
   try {
-    await sequelize.sync({ alter: true })
+    await sequelize.sync({ alter: true, logging: true })
     console.log("All tables successfully synchronized!")
   } catch (error) {
     console.log(error)

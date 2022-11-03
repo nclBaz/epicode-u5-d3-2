@@ -1,7 +1,10 @@
+import { ValidationError } from "sequelize"
+
 export const badRequestErrorHandler = (err, req, res, next) => {
-  console.log(err)
   if (err.status === 400) {
     res.status(400).send({ success: false, message: err.message })
+  } else if (err instanceof ValidationError) {
+    res.status(400).send({ success: false, messages: err.errors.map(e => e.message) })
   } else {
     next(err)
   }
