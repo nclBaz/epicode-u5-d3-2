@@ -14,6 +14,17 @@ export const pgConnect = async () => {
     console.log("Successfully connnected to Postgres!")
   } catch (error) {
     console.log(error)
-    process.exit(1)
+    process.exit(1) // kills nodejs application in case we are not capable of connecting to PG
   }
 }
+
+export const syncModels = async () => {
+  try {
+    await sequelize.sync({ alter: true })
+    console.log("All tables successfully synchronized!")
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export default sequelize

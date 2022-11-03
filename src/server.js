@@ -8,7 +8,8 @@ import {
   notFoundErrorHandler,
   unauthorizedErrorHandler,
 } from "./errorHandlers.js"
-import { pgConnect } from "./db.js"
+import { pgConnect, syncModels } from "./db.js"
+import usersRouter from "./api/users/index.js"
 
 const server = express()
 const port = process.env.PORT || 3001
@@ -18,6 +19,7 @@ server.use(cors())
 server.use(express.json())
 
 // ********************************** ENDPOINTS ******************************
+server.use("/users", usersRouter)
 
 // ******************************** ERROR HANDLERS ***************************
 server.use(badRequestErrorHandler)
@@ -27,6 +29,7 @@ server.use(notFoundErrorHandler)
 server.use(genericErrorHandler)
 
 await pgConnect()
+await syncModels()
 
 server.listen(port, () => {
   console.table(listEndpoints(server))
