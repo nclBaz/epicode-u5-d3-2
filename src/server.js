@@ -8,6 +8,7 @@ import {
   notFoundErrorHandler,
   unauthorizedErrorHandler,
 } from "./errorHandlers.js"
+import { pgConnect } from "./db.js"
 
 const server = express()
 const port = process.env.PORT || 3001
@@ -24,6 +25,8 @@ server.use(unauthorizedErrorHandler)
 server.use(forbiddenErrorHandler)
 server.use(notFoundErrorHandler)
 server.use(genericErrorHandler)
+
+await pgConnect()
 
 server.listen(port, () => {
   console.table(listEndpoints(server))
